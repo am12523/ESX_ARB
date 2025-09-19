@@ -1,0 +1,11 @@
+{
+  "jobs": [
+    {
+      "sport_id": 9,
+      "league_ids": [246],
+      "out_dir": "daily_odds_MLB"
+    }
+  ]
+}
+
+

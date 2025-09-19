@@ -1,0 +1,33 @@
+event_ticker,market_ticker,title,contract_name,yes_bid,yes_ask,no_bid,no_ask
+KXNFLGAME-25SEP15LACLV,KXNFLGAME-25SEP15LACLV-LAC,Los Angeles C at Las Vegas,Los Angeles C vs Las Vegas Winner?,0.61,0.63,0.37,0.39
+KXNFLGAME-25SEP15LACLV,KXNFLGAME-25SEP15LACLV-LV,Los Angeles C at Las Vegas,Los Angeles C vs Las Vegas Winner?,0.36,0.38,0.62,0.64
+KXNFLGAME-25SEP15TBHOU,KXNFLGAME-25SEP15TBHOU-TB,Tampa Bay at Houston,Tampa Bay vs Houston Winner?,0.43,0.44,0.56,0.57
+KXNFLGAME-25SEP15TBHOU,KXNFLGAME-25SEP15TBHOU-HOU,Tampa Bay at Houston,Tampa Bay vs Houston Winner?,0.56,0.57,0.43,0.44
+KXNFLGAME-25SEP14ATLMIN,KXNFLGAME-25SEP14ATLMIN-MIN,Atlanta at Minnesota,Atlanta vs Minnesota Winner?,0.67,0.68,0.32,0.33
+KXNFLGAME-25SEP14ATLMIN,KXNFLGAME-25SEP14ATLMIN-ATL,Atlanta at Minnesota,Atlanta vs Minnesota Winner?,0.32,0.34,0.66,0.68
+KXNFLGAME-25SEP14PHIKC,KXNFLGAME-25SEP14PHIKC-PHI,Philadelphia at Kansas City,Philadelphia vs Kansas City Winner?,0.51,0.53,0.47,0.49
+KXNFLGAME-25SEP14PHIKC,KXNFLGAME-25SEP14PHIKC-KC,Philadelphia at Kansas City,Philadelphia vs Kansas City Winner?,0.48,0.49,0.51,0.52
+KXNFLGAME-25SEP14DENIND,KXNFLGAME-25SEP14DENIND-DEN,Denver at Indianapolis,Denver vs Indianapolis Winner?,0.54,0.56,0.44,0.46
+KXNFLGAME-25SEP14DENIND,KXNFLGAME-25SEP14DENIND-IND,Denver at Indianapolis,Denver vs Indianapolis Winner?,0.44,0.46,0.54,0.56
+KXNFLGAME-25SEP14CARARI,KXNFLGAME-25SEP14CARARI-CAR,Carolina at Arizona,Carolina vs Arizona Winner?,0.27,0.28,0.72,0.73
+KXNFLGAME-25SEP14CARARI,KXNFLGAME-25SEP14CARARI-ARI,Carolina at Arizona,Carolina vs Arizona Winner?,0.72,0.73,0.27,0.28
+KXNFLGAME-25SEP14SFNO,KXNFLGAME-25SEP14SFNO-SF,San Francisco at New Orleans,San Francisco vs New Orleans Winner?,0.67,0.68,0.32,0.33
+KXNFLGAME-25SEP14SFNO,KXNFLGAME-25SEP14SFNO-NO,San Francisco at New Orleans,San Francisco vs New Orleans Winner?,0.32,0.33,0.67,0.68
+KXNFLGAME-25SEP14SEAPIT,KXNFLGAME-25SEP14SEAPIT-SEA,Seattle at Pittsburgh,Seattle vs Pittsburgh Winner?,0.4,0.42,0.58,0.6
+KXNFLGAME-25SEP14SEAPIT,KXNFLGAME-25SEP14SEAPIT-PIT,Seattle at Pittsburgh,Seattle vs Pittsburgh Winner?,0.58,0.6,0.4,0.42
+KXNFLGAME-25SEP14NYGDAL,KXNFLGAME-25SEP14NYGDAL-NYG,New York G at Dallas,New York G vs Dallas Winner?,0.28,0.31,0.69,0.72
+KXNFLGAME-25SEP14NYGDAL,KXNFLGAME-25SEP14NYGDAL-DAL,New York G at Dallas,New York G vs Dallas Winner?,0.7,0.71,0.29,0.3
+KXNFLGAME-25SEP14NEMIA,KXNFLGAME-25SEP14NEMIA-NE,New England at Miami,New England vs Miami Winner?,0.46,0.48,0.52,0.54
+KXNFLGAME-25SEP14NEMIA,KXNFLGAME-25SEP14NEMIA-MIA,New England at Miami,New England vs Miami Winner?,0.52,0.54,0.46,0.48
+KXNFLGAME-25SEP14LATEN,KXNFLGAME-25SEP14LATEN-TEN,Los Angeles R at Tennessee,Los Angeles R vs Tennessee Winner?,0.29,0.31,0.69,0.71
+KXNFLGAME-25SEP14LATEN,KXNFLGAME-25SEP14LATEN-LA,Los Angeles R at Tennessee,Los Angeles R vs Tennessee Winner?,0.69,0.7,0.3,0.31
+KXNFLGAME-25SEP14JACCIN,KXNFLGAME-25SEP14JACCIN-JAC,Jacksonville at Cincinnati,Jacksonville vs Cincinnati Winner?,0.37,0.38,0.62,0.63
+KXNFLGAME-25SEP14JACCIN,KXNFLGAME-25SEP14JACCIN-CIN,Jacksonville at Cincinnati,Jacksonville vs Cincinnati Winner?,0.62,0.63,0.37,0.38
+KXNFLGAME-25SEP14CLEBAL,KXNFLGAME-25SEP14CLEBAL-CLE,Cleveland at Baltimore,Cleveland vs Baltimore Winner?,0.13,0.14,0.86,0.87
+KXNFLGAME-25SEP14CLEBAL,KXNFLGAME-25SEP14CLEBAL-BAL,Cleveland at Baltimore,Cleveland vs Baltimore Winner?,0.86,0.87,0.13,0.14
+KXNFLGAME-25SEP14CHIDET,KXNFLGAME-25SEP14CHIDET-DET,Chicago at Detroit,Chicago vs Detroit Winner?,0.67,0.69,0.31,0.33
+KXNFLGAME-25SEP14CHIDET,KXNFLGAME-25SEP14CHIDET-CHI,Chicago at Detroit,Chicago vs Detroit Winner?,0.31,0.33,0.67,0.69
+KXNFLGAME-25SEP14BUFNYJ,KXNFLGAME-25SEP14BUFNYJ-NYJ,Buffalo at New York J,Buffalo vs New York J Winner?,0.25,0.27,0.73,0.75
+KXNFLGAME-25SEP14BUFNYJ,KXNFLGAME-25SEP14BUFNYJ-BUF,Buffalo at New York J,Buffalo vs New York J Winner?,0.73,0.75,0.25,0.27
+KXNFLGAME-25SEP11WASGB,KXNFLGAME-25SEP11WASGB-WAS,Washington at Green Bay,Washington vs Green Bay Winner?,0.36,0.38,0.62,0.64
+KXNFLGAME-25SEP11WASGB,KXNFLGAME-25SEP11WASGB-GB,Washington at Green Bay,Washington vs Green Bay Winner?,0.62,0.64,0.36,0.38
