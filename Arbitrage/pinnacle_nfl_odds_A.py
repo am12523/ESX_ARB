@@ -1,4 +1,19 @@
 # %%
+"""
+TLDR: Fetches NFL market data from Pinnacle API and returns it as a Pandas DataFrame.
+
+- Fetches all prematch markets for the NFL (SPORT_ID=7).
+- Filters events to only include the specified league (LEAGUE_ID=889).
+- Extracts detailed betting information for the "Game" period, including:
+    - Moneyline odds (home, draw, away)
+    - Spread odds
+    - Total points (over/under)
+    - Team-specific totals (home/away)
+    - Event metadata (start time, league, teams, event type)
+- Handles nested data structures where events might be under "leagues" or "events".
+- Returns a DataFrame with one row per event period.
+"""
+#Imports
 import csv
 import os
 import sys
@@ -6,9 +21,14 @@ sys.path.append(os.path.abspath("odds-collector-script-main"))
 from api import PinnacleOddsClient
 import pandas as pd
 
+# API key for Pinnacle API (set as environment variable)
 API_KEY = os.getenv("USER_API_KEY")
+
+# Sport and league identifiers
 SPORT_ID = 7
 LEAGUE_ID = 889
+
+# Output CSV file (if needed)
 OUTPUT_FILE = "pinnacle_nfl_markets.csv"
 
 def fetch_pinnacle_nfl_df():
@@ -33,6 +53,7 @@ def fetch_pinnacle_nfl_df():
     rows = []
 
     for event in league_events:
+        # Extract general event metadata
         event_id = event.get("event_id")
         sport_id = event.get("sport_id")
         league_id = event.get("league_id")
@@ -43,11 +64,13 @@ def fetch_pinnacle_nfl_df():
         event_type = event.get("event_type")
         open_flags = event.get("open_flags") or {}
 
+        # Iterate through periods (e.g., Game, Quarter, Half)
         periods = event.get("periods") or {}
         for period_key, period in periods.items():
             period_name = period.get("description")
             if period_name != "Game":
                 continue
+
             # Flatten moneyline, spreads, totals, team totals
             row = {
                 "event_id": event_id,
@@ -106,9 +129,12 @@ def fetch_pinnacle_nfl_df():
             row["away_team_over"] = away_tt.get("over")
             row["away_team_under"] = away_tt.get("under")
 
+            # Append row to results
             rows.append(row)
-    return pd.DataFrame(rows)
 
+    return pd.DataFrame(rows) # Convert list of dictionaries to DataFrame
+
+# Commented out section if needed to save csv verions of the data
     """
     # Write CSV
     if rows:
