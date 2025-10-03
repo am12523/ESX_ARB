@@ -1,22 +1,28 @@
 """
 ARB - Pinnacle and Kalshi
 
-How it works:
-- Fetch Kalshi orderbook rows and Pinnacle pre-match moneyline markets
-- Normalize team names and merge on home/away
-- Compute devigged probabilities from Pinnacle (derive "true" p_home/p_away)
-- Compare Kalshi ask prices and Pinnacle implied/devig prices for arbitrage
-- When a cross appears, place limit orders on the expensive market (to improve price) and, when that limit fills, take the market on the other side to hedge.
-- Size each trade using a configurable fractional Kelly heuristic.
+This script searches for arbitrage opportunities between Pinnacle Sportsbook (pre-match NFL moneyline odds) and Kalshi prediction markets (YES/NO contracts).
+--> Note: This is a simulation tool and that only identifies arbitrage opportunities and computes optimal bet sizing
+           Actual trade execution logic not implemented yet
 
+The process:
+- Fetch live Kalshi order book data and Pinnacle NFL moneyline odds.
+- Normalize team names for consistency across platforms.
+- Convert Pinnacle's decimal odds into implied probabilities and remove the bookmaker's vig (overround).
+- Compare Pinnacle's "true" probabilities with Kalshi's ask prices (YES/NO).
+- Identify arbitrage opportunities where Kalshi prices are underpriced relative to Pinnacle's fair probabilities.
+- Apply a fractional Kelly criterion heuristic to size trades based on bankroll and edge.
+- Output potential trades with expected profit/loss and performance metrics.
 """
+
+#Imports
 import time
 import pandas as pd
 
 from pinnacle_nfl_odds_A import fetch_pinnacle_nfl_df
 from kalshi_nfl_odds_A import fetch_kalshi_nfl_df
 
-
+#Key parameters
 kalshi_fee = 0.003
 bankroll = 10_000
 fractional_kelly = 0.2
@@ -59,18 +65,27 @@ TEAM_MAP = {
 }
 
 def normalize_team(name: str) -> str:
+    """
+    Normalizes team names using TEAM_MAP
+    """
     return TEAM_MAP.get(name, name)
 
 def devig(home_prob, away_prob):
+    """
+    Removes Pinnacle's vig from implied probabilities
+    """
     r = home_prob + away_prob 
     return home_prob / r, away_prob / r 
 
 
 def kelly_fraction(pinnacle_odds, kalshi_odds, shrinkage=0.2):
+    """
+    Computes fractional Kelly position sizing
+    """
     kelly = (kalshi_odds * pinnacle_odds - 1) / (kalshi_odds - 1)
     return max(0, shrinkage * kelly)
 
-# COMBINED PAYOUT > 1 ARB
+
 def simulate_trade():
     t0 = time.time()
 
@@ -177,89 +192,3 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-
-
-"""
-    # Detect true arbitrage: combined inverse probabilities < 1 (ALLOWING FOR TOLERANCE/VIG --> CAN REMOVE)
-    tolerance = 0.02
-    merged["arb_away"] = (1 / merged["yes_prob"] + 1 / merged["away_prob"]) < 1 + tolerance
-    merged["arb_home"] = (1 / merged["no_prob"] + 1 / merged["home_prob"]) < 1 + tolerance
-    merged["has_arb"] = merged["arb_home"] | merged["arb_away"]
-
-    # Compute profit %
-    merged["arb_profit_away"] = 1 - (1 / merged["yes_prob"] + 1 / merged["away_prob"])
-    merged["arb_profit_home"] = 1 - (1 / merged["no_prob"] + 1 / merged["home_prob"])
-
-    # Show only arbitrage opportunities
-    arb_opps = merged[merged["has_arb"]][[
-        "home", "away",
-        "yes_prob", "no_prob", "home_prob", "away_prob",
-        "arb_home", "arb_away",
-        "arb_profit_home", "arb_profit_away"
-    ]]
-
-    print(arb_opps)
-
-"""
-
-
-
-
-
-#LOOSE ARB (KALSHI < PINNACLE)
-"""
-def detect_arbitrage():
-    kalshi_df = fetch_kalshi_nfl_df()
-    pinnacle_df = fetch_pinnacle_nfl_df()
-
-    if kalshi_df.empty or pinnacle_df.empty:
-        print("No data found.")
-        return
-
-    # normalize Kalshi team names
-    kalshi_df["away"] = kalshi_df["title"].str.split(" at ").str[0].map(normalize_team)
-    kalshi_df["home"] = kalshi_df["title"].str.split(" at ").str[1].map(normalize_team)
-
-    # implied probs
-    pinnacle_df["home_prob"] = 1 / pinnacle_df["moneyline_home"]
-    pinnacle_df["away_prob"] = 1 / pinnacle_df["moneyline_away"]
-
-    kalshi_df["yes_prob"] = kalshi_df["yes_ask"]
-    kalshi_df["no_prob"] = kalshi_df["no_ask"]
-
-    # merge
-    merged = kalshi_df.merge(
-        pinnacle_df,
-        on=["home", "away"],
-        how="inner",
-        suffixes=("_kalshi", "_pinnacle")
-    )
-    merged_unique = merged.drop_duplicates(subset=["home", "away"])
-    merged_unique = merged_unique.copy()
-
-    #Kalshi probabilities (yes_prob, no_prob) // Pinnacle probabilities (home_prob, away_prob)
-    #Kalshi YES → Pinnacle away win // Kalshi NO → Pinnacle home win
-    # detect arb: if Kalshi YES prob < Pinnacle away prob, or Kalshi NO prob < Pinnacle home prob
-
-    # Recompute arbitrage flags
-    merged_unique["arb_home"] = merged_unique["no_prob"] < merged_unique["home_prob"]
-    merged_unique["arb_away"] = merged_unique["yes_prob"] < merged_unique["away_prob"]
-    merged_unique["has_arb"] = merged_unique["arb_home"] | merged_unique["arb_away"]
-
-    # Show only arb opportunities
-    arb_opps = merged_unique[merged_unique["has_arb"]][[
-        "home", "away", "yes_prob", "no_prob", "home_prob", "away_prob", "arb_home", "arb_away"
-    ]]
-    print(arb_opps)
-
-
-if __name__ == "__main__":
-    while True:
-        detect_arbitrage()
-        time.sleep(60)  # wait 60 seconds before next scan"
-
-     """
