@@ -1,22 +1,46 @@
+"""
+Fetches open NFL markets from Kalshi and compiles them into a Pandas DataFrame.
+- Does not require authentication key for retrieving markets
+- Will require authentication key once we start to trade on kalshi
+"""
+#Imports
 import requests
 import pandas as pd
 from datetime import datetime
 
+# Base URL for Kalshi trading API
 BASE_URL = "https://api.elections.kalshi.com/trade-api/v2"
 
 def get_events(series_ticker="KXNFLGAME"):
+    """
+    Fetches open events from Kalshi for a given series.
+    Args: series_ticker (str): The Kalshi series identifier (default "KXNFLGAME").
+    Returns:list: A list of event dictionaries containing metadata for each open event.
+    """
     url = f"{BASE_URL}/events"
     resp = requests.get(url, params={"status": "open", "series_ticker": series_ticker})
     resp.raise_for_status()
     return resp.json().get("events", [])
 
 def get_markets(event_ticker):
+    """
+    Fetches all markets associated with a given event.
+    Args:event_ticker (str): The ticker symbol for the event.
+    Returns:list: A list of market dictionaries, each containing bid/ask and contract info.
+    """
     url = f"{BASE_URL}/markets"
     resp = requests.get(url, params={"event_ticker": event_ticker})
     resp.raise_for_status()
     return resp.json().get("markets", [])
 
 def fetch_kalshi_nfl_df():
+    """
+    - Retrieves all open events for the NFL series ("KXNFLGAME").
+    - For each event, fetches all associated markets.
+    - Calculates 'yes' and 'no' bid/ask prices in decimal form (0-1 range).
+    - Creates a DataFrame containing metadata and bid/ask prices for each market.
+
+    """
     rows = []
     events = get_events("KXNFLGAME")
 
@@ -41,6 +65,7 @@ def fetch_kalshi_nfl_df():
             })
     return pd.DataFrame(rows)
 
+# Commented out section for saving dataframe to csv
 """
 if __name__ == "__main__":
     nfl_df = fetch_kalshi_nfl_df()
@@ -55,7 +80,7 @@ if __name__ == "__main__":
 """
 
 
-# ---- SKIP FOR NOW ---- 
+# ---- SKIP FOR NOW ----  (commented out section for placing kalshi orders)
 """
 def get_kalshi_orderbook_arrays_with_tickers(ticker_a, ticker_b):
     # get orderbooks for ticker_a and ticker_b
